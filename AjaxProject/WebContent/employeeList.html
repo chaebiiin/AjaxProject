@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>employeeList.html</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			url : "GetEmpServlet",
+			success : function(result, status, xhr) {
+				console.log(result);
+				var data = JSON.parse(result);
+				createTable(data);
+
+				//for (var i = 0; i < data.length; i++) {
+				//		document.write("<h2>ID: " + data[i].id + "</h2>");
+				//	document.write("<h2>Fname:  " + data[i].first_name
+				//		+ "</h2>");
+				//document.write("<h2>Email:  " + data[i].email
+				//		+ "</h2>");
+				//}
+
+				//				console.log(data);
+				//				document.write("<h2>ID:  " + data[0].id + "</h2>");
+				//				document.write("<h2>Fname:  " + data[0].first_name + "</h2>");
+				//				document.write("<h2>Email:  " + data[0].email + "</h2>");
+
+			}
+		});
+	});
+
+	function createTable(data) {
+		var $table = $('<table />').attr({
+			'border' : '1',
+			'cellPadding' : '5px',
+			'cellSpacing' : '0px'
+		});
+		var $tr = $('<tr />');
+		for (attr in data[0]) {
+			$tr.append($('<th />').text(attr));
+		}
+		$table.append($tr);
+
+		//데이터 영역  
+		data.forEach(function(o, i) {
+					$tr = $('<tr />').mouseenter(mouseenterfunc).mouseout(
+							mouseoutFunc);
+					//f == attr
+					for (f in o) {
+						$tr.append($('<td />').text(o[f]));
+					}
+					$table.append($tr);
+				});
+
+		$('#show').append($table);
+	}
+	function mouseenterfunc() {
+		$(this).css('color', 'red');
+	}
+	function mouseoutFunc() {
+		$(this).css('color', '');
+
+	}
+</script>
+</head>
+
+<body>
+	<p id="show"></p>
+
+</body>
+</html>
+

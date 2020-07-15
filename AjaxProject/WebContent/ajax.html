@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery/ajax.html</title>
+    <script src="jquery-3.5.1.min.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            // $('button').click(showResult);
+            $('button').on('click', showResult);
+        });
+
+        function showResult() {
+            $.ajax({
+                url: "MOCK_DATA.json",
+                success: function (result, status, xhr) {
+                    // console.log( "result:  "  , result);
+                    // console.log("status:  " + status);
+                    // console.log(xhr);
+                    // document.write(result[0].id);
+                    getData(result);
+                }
+            });
+        }
+        function getData(data) {
+            var $table = $('<table />').attr({ 'border': '1', 'id': 'tb1' });
+            var $tr = $('<tr/>');
+            $tr.append($('<th />').text('ID'),
+                $('<th />').text('FName'),
+                $('<th />').text('LName'),
+                $('<th />').text('Gender'),
+                $('<th />').text('Email'),
+            );
+            $table.append($tr);
+
+            data.forEach(function(o){
+                $tr = $('<tr />');
+                $tr.append(
+                    $('<td />').text(o.id), 
+                    $('<td />').text(o.first_name),
+                    $('<td />').text(o.last_name), 
+                    $('<td />').text(o.gender),
+                    $('<td />').text(o.email));
+                $table.append($tr);     
+            });
+            $('#show').append($table);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Ajax Sample</h1>
+    <!-- <button onclick="showResult()">show result</button> -->
+    <button>show result</button>
+    <p id="show"></p>
+</body>
+
+</html>
