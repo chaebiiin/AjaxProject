@@ -10,7 +10,7 @@
 		$.ajax({
 			url : "GetEmpServlet",
 			success : function(result, status, xhr) {
-				console.log(result);
+				//console.log(result);
 				var data = JSON.parse(result);
 				createTable(data);
 
@@ -51,6 +51,7 @@
 					for (f in o) {
 						$tr.append($('<td />').text(o[f]));
 					}
+					$tr.append($('<td />').append($('<button />').text('삭제').click(deleteFunc)).attr({'id':'del','value':'i'}));
 					$table.append($tr);
 				});
 
@@ -62,6 +63,13 @@
 	function mouseoutFunc() {
 		$(this).css('color', '');
 
+	}
+	
+	function deleteFunc(id) {
+		
+		//var ck = $('button').parentNode();
+		//console.log(ck);
+	
 	}
 </script>
 </head>
