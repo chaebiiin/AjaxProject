@@ -3,8 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>employeeList.html</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+th {
+	background-color: gold;
+	aligin: center;
+}
 
+#show {
+	position: absolute;
+	left: 788px;
+	top: 35px;
+}
+</style>
 <script>
 	$(document).ready(function() {
 		$.ajax({
@@ -51,31 +63,32 @@
 					for (f in o) {
 						$tr.append($('<td />').text(o[f]));
 					}
-					$tr.append($('<td />').append($('<button />').text('삭제').click(deleteFunc)).attr({'id':'del','value':'i'}));
+					$tr.append($('<td />').append(
+							$('<button />').text('삭제').click(deleteFunc)).attr(
+							{'id' : 'del'}));
 					$table.append($tr);
 				});
 
 		$('#show').append($table);
 	}
 	function mouseenterfunc() {
-		$(this).css('color', 'red');
+		$(this).css('background-color', 'rgba(248, 212, 10, 0.699)');
 	}
+	
 	function mouseoutFunc() {
-		$(this).css('color', '');
-
+		$(this).css('background-color', '');
 	}
-	
+
 	function deleteFunc(id) {
-		
-		//var ck = $('button').parentNode();
-		//console.log(ck);
-	
+		$('#del').remove();
+		alert(del + "가 삭제되었습니다")
 	}
 </script>
 </head>
 
 <body>
-	<p id="show"></p>
+	<p style="text-align: center"> ＜ EMPLOYEE LIST ＞</p>
+	<p id="show" style="text-align: center"></p>
 
 </body>
 </html>
