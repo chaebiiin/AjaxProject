@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test200716/exam05.html</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+       $(document).ready(function () {
+            // $('button').click(showResult);
+            $('button').on('click', showResult);
+        });
+
+        function showResult() {
+            $.ajax({
+                url: "studentScore.json",
+                success: function (result, status, xhr) {
+                    getData(result);
+                }
+            });
+        }
+        function getData(data) {
+            var $table = $('<table />').attr({ 'border': '1', 'id': 'tb1' });
+            var $tr = $('<tr/>');
+            $tr.append($('<th />').text('customer_no'),
+                $('<th />').text('name'),
+                $('<th />').text('phone'),
+                $('<th />').text('email'),
+                $('<th />').text('gender'),
+            );
+            $table.append($tr);
+
+            data.forEach(function(o){
+                $tr = $('<tr />');
+                $tr.append(
+                    $('<td />').text(o.customer_no), 
+                    $('<td />').text(o.name),
+                    $('<td />').text(o.phone), 
+                    $('<td />').text(o.email),
+                    $('<td />').text(o.gender));
+                $table.append($tr);     
+            });
+            $('#show').append($table);
+        }
+
+    </script>
+</head>
+
+<body>
+    <h1>Student List</h1>
+    <button>show result</button>
+    <p id="show"></p>
+</body>
+
+</html>

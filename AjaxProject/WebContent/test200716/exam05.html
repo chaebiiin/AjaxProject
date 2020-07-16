@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test200716/exam04.html</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="jquery-3.5.1.min.js"></script> -->
+    <script>
+        $(document).ready(function (result, status, xhr) {
+            $.ajax({
+                url: "emp.xml",
+                dataType: "xml",
+                success: function (xml) {
+                    // $(xml).find('record').each(function () {
+
+                    //     var emp_id = $(this).find("emp_id").text();
+                    //     var emp_name = $(this).find("emp_name").text();
+                    //     var com_name = $(this).find("com_name").text();
+                    //     var dept_name = $(this).find("dept_name").text();
+                    //     var job = $(this).find("job").text();
+
+                        // var view_text = emp_id +"<br> "+  emp_name +"<br> "+ com_name+"<br> " +job +"<br>"+"<br>";
+                        // var view_text = emp_id + emp_name + com_name + job;
+
+                        // console.log($(this).find().text());
+                        // $("#show").append(view_text);
+                        getData(xml);
+
+                    // });
+                }
+            });
+        });
+
+
+        function getData(xml) {
+            var $table = $('<table />').attr({ 'border': '1', 'id': 'tb1' });
+                var $tr = $('<tr/>');
+                $tr.append($('<th />').text('emp_id'),
+                    $('<th />').text('emp_name'),
+                    $('<th />').text('com_name'),
+                    $('<th />').text('dept_name'),
+                    $('<th />').text('job'),
+                );
+                $table.append($tr);
+
+            $(xml).find('record').each(function (o) {
+
+                var emp_id = $(this).find("emp_id").text();
+                var emp_name = $(this).find("emp_name").text();
+                var com_name = $(this).find("com_name").text();
+                var dept_name = $(this).find("dept_name").text();
+                var job = $(this).find("job").text();
+
+                var view_text = emp_id + emp_name + com_name + job;
+
+                
+                $tr = $('<tr />');
+                
+                console.log(emp_id);
+            
+                    $tr.append(
+                        $('<td />').text(emp_id),
+                        $('<td />').text(emp_name),
+                        $('<td />').text(com_name),
+                        $('<td />').text(dept_name),
+                        $('<td />').text(job));
+                    $table.append($tr);
+    
+                $('#show').append($table);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Employee List</h1>
+    <p id="show"></p>
+</body>
+
+</html>
