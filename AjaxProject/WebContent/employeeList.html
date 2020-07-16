@@ -12,8 +12,8 @@ th {
 }
 
 #show {
-	position: absolute;
-	left: 788px;
+	position: relative;
+	left: 350px;
 	top: 35px;
 }
 </style>
@@ -33,12 +33,10 @@ th {
 				//document.write("<h2>Email:  " + data[i].email
 				//		+ "</h2>");
 				//}
-
 				//				console.log(data);
 				//				document.write("<h2>ID:  " + data[0].id + "</h2>");
 				//				document.write("<h2>Fname:  " + data[0].first_name + "</h2>");
 				//				document.write("<h2>Email:  " + data[0].email + "</h2>");
-
 			}
 		});
 	});
@@ -62,10 +60,14 @@ th {
 					//f == attr
 					for (f in o) {
 						$tr.append($('<td />').text(o[f]));
+						//console.log(f);
+						if(f == "salary"){
+							$(f).on("dblclick", changeFunc(this));
+						}
 					}
 					$tr.append($('<td />').append(
-							$('<button />').text('삭제').click(deleteFunc)).attr(
-							{'id' : 'del'}));
+							$('<button />').text('삭제').click(deleteFunc))).attr(
+							{'id' : 'del_'+i});
 					$table.append($tr);
 				});
 
@@ -78,10 +80,37 @@ th {
 	function mouseoutFunc() {
 		$(this).css('background-color', '');
 	}
-
+//수정해야함
+	function valueUpdate(){
+	var curSalary = $(this).val();
+	var curEmpId = $(this).parent().parent().children().eq(0)
+	}
+	
+	function changeFunc(id){
+		console.log(this);
+		var curValue = id.childNodes[0].nodeValue;
+		var $input = $('<input />').attr('value', curValue);
+				$input.on('change', valueUpdate);
+				
+		this.childNode[0].nodeValue= "";
+		
+	}
+// 수정해보기
 	function deleteFunc(id) {
-		$('#del').remove();
-		alert(del + "가 삭제되었습니다")
+		var eid = $(this).parent().parent().children().eq(0).text();
+		console.log(eid);
+		
+		$(this).parent().parent().remove();
+		$.ajax({
+			//url: "DelEmpServelet"
+			url: "DelEmpServlet",
+			data: {"eid": eid, "salary": 500},
+			success: function(result, status){
+				console.log(status);
+				
+			}
+		});
+		//alert( "가 삭제되었습니다")
 	}
 </script>
 </head>

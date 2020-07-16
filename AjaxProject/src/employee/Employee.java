@@ -23,6 +23,7 @@ public class Employee {
 		this.first_name = first_name;
 		this.email = email;
 		this.salary = salary;
+	
 	}
 
 	public int getEmployee_id() {
@@ -40,6 +41,7 @@ public class Employee {
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
+	
 
 	public String getEmail() {
 		return email;

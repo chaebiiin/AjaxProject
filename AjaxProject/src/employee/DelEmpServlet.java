@@ -7,30 +7,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet("/AddEmplServlet")
-public class AddEmplServlet extends HttpServlet {
+@WebServlet("/DelEmpServlet")
+public class DelEmpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public AddEmplServlet() {
+  
+    public DelEmpServlet() {
         super();
+       
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String lastName = request.getParameter("last_name");
-		String email = request.getParameter("email");
-		String hire_date = request.getParameter("hire_date");
-		String jobId = request.getParameter("job_id");
+		String empId = request.getParameter("eid");
+		String salary = request.getParameter("salary");
+		System.out.println(empId + " ," + salary);
 		
-		Employee emp = new Employee(email, hire_date, lastName, jobId);
 		EmpDAO dao = new EmpDAO();
-		dao.insertEmp(emp);
-		request.getRequestDispatcher("employeeList.html").forward(request, response);
+		dao.deleteEmp(empId);
+	
 	}
+
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		doGet(request, response);
-		
 	}
 
 }

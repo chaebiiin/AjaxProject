@@ -23,6 +23,25 @@ public class EmpDAO {
 		}
 		return conn;
 	}
+	//delete 수정하기
+	public void deleteEmp(String empId) {
+		conn = getConnect();
+		String sql = "delete from employees where employee_id = " + empId ;
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			int r = pstmt.executeUpdate();
+			System.out.println(r + "건 삭제됨");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 	public Map<String, String> getJobCode(){
 		conn = getConnect();
@@ -35,29 +54,28 @@ public class EmpDAO {
 				map.put(rs.getString("job_id"), rs.getString("job_title"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return map;
 	}
-	
+	//insert 잘 안됨
 	public void insertEmp(Employee emp) {
 		conn = getConnect();
-		String sql = "insert into employees (employee_id, last_name, email, hire_date, job_id)"
+		String sql = "insert into employees (employee_id, last_name, email, hire_date, job_id, salary)"
 				+ "values(employees_seq.nextval,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, emp.getFirst_name());
+			pstmt.setString(1, emp.getLast_name());
 			pstmt.setString(2, emp.getEmail());
 			pstmt.setString(3, emp.getHire_date());
 			pstmt.setString(4, emp.getJob_id());
+			pstmt.setInt(5, emp.getSalary());
 			int r = pstmt.executeUpdate();
 			System.out.println(r + "건 입력.");
 		} catch (SQLException e) {
@@ -69,7 +87,6 @@ public class EmpDAO {
 				e.printStackTrace();
 			}
 		}
-		
 	}
 
 	public List<Employee> getEmpList() {
